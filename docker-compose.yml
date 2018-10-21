@@ -1,0 +1,11 @@
+
+db:
+  image: mysql:5.7
+  container_name: chronos-db
+  ports: 
+    - "3306:3306"
+  environment:
+    MYSQL_ROOT_PASSWORD: 8836be76c35937e5926aa9a86f9d1795
+    MYSQL_USER: chronos
+    MYSQL_PASSWORD: 9031be76c35937e5926aa9a86f9d0563
+    MYSQL_DATABASE: chronos

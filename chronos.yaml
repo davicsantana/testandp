@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chronos
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      name:  chronos_mapping
+      prefix: /chronos/
+      service: chronos
+spec:
+  selector:
+    app: chronos
+  ports:
+  - port: 80
+    name: http-chronos
+    targetPort: http-api
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: chronos
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: chronos
+    spec:
+      containers:
+      - name: chronos
+        image: msboaventura/chronos
+        ports:
+        - name: http-api
+          containerPort: 5000
